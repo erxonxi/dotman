@@ -13,6 +13,7 @@ struct Args {
 enum Action {
     List,
     Save,
+    Races
 }
 
 fn main() {
@@ -42,5 +43,11 @@ fn main() {
 
             files_races.save_actual_race(name, actual_content);
         }
+        Action::Races => {
+            let races = files_races.get_races();
+            for race in races {
+                println!("{}", race.path)
+            }
+        },
     }
 }
