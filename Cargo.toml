@@ -10,3 +10,4 @@ lto = true # Habilitar la optimización del tiempo de enlace
 codegen-units = 1 # Maximice las optimizaciones de reducción de tamaño
 
 [dependencies]
+clap = { version = "4.0.18", features = ["derive"] }
