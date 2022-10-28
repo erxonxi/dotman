@@ -15,13 +15,25 @@ pub mod files {
 
     #[derive(Debug)]
     pub struct Race {
+        pub name: String,
         pub path: String,
         pub content: Vec<Content>,
     }
 
     impl Race {
         pub fn new(path: String, content: Vec<Content>) -> Race {
-            Self { path, content }
+            let dirs = path
+                .as_str()
+                .split("/")
+                .map(|e| String::from(e))
+                .collect::<Vec<String>>();
+            let legth = dirs.len() - 1;
+            let name = &dirs[legth];
+            Self {
+                name: name.to_owned(),
+                path,
+                content,
+            }
         }
     }
 

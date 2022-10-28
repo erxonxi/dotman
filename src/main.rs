@@ -1,20 +1,9 @@
+mod command;
 mod lib;
 
-use clap::{Parser, Subcommand};
+use clap::Parser;
+use command::command::{Action, Args};
 use lib::files::FilesRaces;
-
-#[derive(Parser, Debug)]
-struct Args {
-    #[command(subcommand)]
-    action: Action,
-}
-
-#[derive(Subcommand, Debug)]
-enum Action {
-    List,
-    Save,
-    Races
-}
 
 fn main() {
     let args: Args = Args::parse();
@@ -33,8 +22,7 @@ fn main() {
                 println!("{}", content.path)
             }
         }
-        Action::Save => {
-            let name = String::from("cat-dotfiles");
+        Action::Save{name} => {
             let actual_content = files_races.get_actual_race_content();
             let actual_content = actual_content
                 .into_iter()
@@ -46,8 +34,8 @@ fn main() {
         Action::Races => {
             let races = files_races.get_races();
             for race in races {
-                println!("{}", race.path)
+                println!("{}", race.name)
             }
-        },
+        }
     }
 }
