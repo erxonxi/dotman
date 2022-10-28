@@ -11,6 +11,7 @@ pub mod command {
 	pub enum Action {
 			List,
 			Save{ name: String },
-			Races
+			Races,
+			Load{ name: String },
 	}	
 }

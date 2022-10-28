@@ -8,11 +8,7 @@ use lib::files::FilesRaces;
 fn main() {
     let args: Args = Args::parse();
 
-    let user = std::env::var_os("USER").expect("Error on get username");
-    let config_path = String::from(format!(
-        "/home/{}/.config",
-        user.to_str().expect("Error on get username")
-    ));
+    let config_path = FilesRaces::get_config_path();
     let files_races = FilesRaces::new(config_path);
 
     match args.action {
@@ -22,7 +18,7 @@ fn main() {
                 println!("{}", content.path)
             }
         }
-        Action::Save{name} => {
+        Action::Save { name } => {
             let actual_content = files_races.get_actual_race_content();
             let actual_content = actual_content
                 .into_iter()
@@ -34,8 +30,11 @@ fn main() {
         Action::Races => {
             let races = files_races.get_races();
             for race in races {
-                println!("{}", race.name)
+                println!("[*] {}", race.name)
             }
+        }
+        Action::Load { name } => {
+            files_races.load_race(name);
         }
     }
 }

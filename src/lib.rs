@@ -46,6 +46,14 @@ pub mod files {
             Self { config_path }
         }
 
+        pub fn get_config_path() -> String {
+            let user = std::env::var_os("USER").expect("Error on get username");
+            String::from(format!(
+                "/home/{}/.config",
+                user.to_str().expect("Error on get username")
+            ))
+        }
+
         pub fn get_races(&self) -> Vec<Race> {
             let path = format!("{}/dotman/races", self.config_path);
             let entries = fs::read_dir(path).expect("Error getting entires");
@@ -122,6 +130,13 @@ pub mod files {
                 }
             }
             Ok(())
+        }
+
+        pub fn load_race(&self, name: String) {
+            let config_path = FilesRaces::get_config_path();
+            let race_path = String::from_iter([config_path, String::from(format!("/{}", name))]);
+
+            
         }
     }
 }
